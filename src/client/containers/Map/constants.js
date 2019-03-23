@@ -1,0 +1,6 @@
+export const SET_FETCH_STATUS = "SET_FETCH_STATUS";
+export const LOAD_MAP_MARKERS = "LOAD_MAP_MARKERS";
+export const REMOVE_MAP_MARKER = "REMOVE_MAP_MARKER";
+export const ADD_MAP_MARKER = "ADD_MAP_MARKER";
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";

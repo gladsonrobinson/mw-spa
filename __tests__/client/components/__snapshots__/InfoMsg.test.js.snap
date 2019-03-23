@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoMsg Component Should Render correctly when errorMessage prop contains value 'no_records_found' and fetchStatus is false 1`] = `
+<div
+  className="info-msg"
+>
+  <span
+    className="info-msg__error"
+  >
+    No Records Found
+  </span>
+</div>
+`;
+
+exports[`InfoMsg Component Should Render correctly when errorMessage prop contains value and fetchStatus is false 1`] = `
+<div
+  className="info-msg"
+>
+  <span
+    className="info-msg__error"
+  >
+    Error Please Try Again
+  </span>
+</div>
+`;
+
+exports[`InfoMsg Component Should Render correctly when fetchStatus prop true 1`] = `
+<div
+  className="info-msg"
+>
+  <span
+    className="info-msg__fetching"
+  >
+    fetching...
+  </span>
+</div>
+`;
+
+exports[`InfoMsg Component Should Render correctly when no props passed 1`] = `
+<div
+  className="info-msg"
+/>
+`;
