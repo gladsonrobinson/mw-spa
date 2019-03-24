@@ -1,6 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const dotenv = require('dotenv');
+
+const environment = process.env.NODE_ENV || 'development';
+const env = environment === 'development' ? dotenv.config({ path: '.env.dev' }).parsed : dotenv.config().parsed;
 
 const outputDirectory = 'dist';
 
