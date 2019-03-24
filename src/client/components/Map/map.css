@@ -1,0 +1,9 @@
+.map-container {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    flex-basis: 100%
+  }
+}

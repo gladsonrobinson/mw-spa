@@ -43,5 +43,6 @@
 .container.mw-map {
   display: flex;
   flex-direction: row;
+  flex-flow: wrap;
   margin-top: 10px;
 }

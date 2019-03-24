@@ -3,10 +3,18 @@
   margin-left: 10px;
 }
 
+@media (max-width: 768px) {
+  .map-manager {
+    flex-basis: 100%;
+    margin-top: 40px;
+  }
+}
+
 .map-manager-markers {
   display: flex;
   flex-wrap: wrap;
   text-align: left;
+  margin-top: 12px;
 }
 
 .map-manager-markers__item {
@@ -15,6 +23,19 @@
 }
 
 .map-manager-markers__item__address {
+  font-size: 20px;
+  margin: 2px 0;
+  color: #1c74c5;
+}
 
+.map-manager-markers__item__latlng {
+  font-size: 12px
+}
+
+.map-manager-markers__item__delete {
+  color: black;
+  background-color: white;
+  border: 1px solid #adaeb3;
+  cursor: pointer;
 }
 

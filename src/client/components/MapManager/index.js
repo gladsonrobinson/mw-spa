@@ -19,14 +19,13 @@ export default class MapManager extends React.PureComponent {
           />
         </div>
         <div className="map-manager-markers">
-          {this.props.mapMarkers.length &&
+          {this.props.mapMarkers.length > 0 &&
             this.props.mapMarkers.map(item => {
               return (
                 <div className="map-manager-markers__item" key={item._id}>
                   <h4 className="map-manager-markers__item__address">
                     {item.address}
                   </h4>
-                  <div>{item.address}</div>
                   <div className="map-manager-markers__item__latlng">
                     Latitude: {item.latLng.lat}
                   </div>

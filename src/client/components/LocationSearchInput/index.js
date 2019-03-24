@@ -4,6 +4,8 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 
+import './LocationSearchInput.css';
+
 export default class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);

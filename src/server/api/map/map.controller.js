@@ -15,7 +15,7 @@ export const saveMarker = (req, res) => {
 };
 
 export const removeMarker = (req, res) => {
-  return Map.remove({ _id: req.params.id })
+  return Map.deleteOne({ _id: req.params.id })
     .then(_respondWithResult(res))
     .catch(_handleError(res));
 };
