@@ -2,7 +2,7 @@ import axios from "axios";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import MockAdapter from "axios-mock-adapter";
-import * as actions from "../../../../src/client/containers/Movies/actions";
+import * as actions from "../../../../src/client/containers/Map/actions";
 
 const axiosMock = new MockAdapter(axios);
 const middlewares = [thunk];

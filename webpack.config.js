@@ -12,6 +12,8 @@ module.exports = () => {
   const env =
     environment === "development"
       ? dotenv.config({ path: ".env.dev" }).parsed
+      : process.env.DOCKER_ST === "true"
+      ? dotenv.config({ path: ".env.docker" }).parsed
       : dotenv.config().parsed;
   const envKeys = Object.keys(env).reduce((prev, next) => {
     prev[`process.env.${next}`] = JSON.stringify(env[next]);
@@ -24,20 +26,20 @@ module.exports = () => {
       path: path.join(__dirname, outputDirectory),
       filename: "[name].[hash].js"
     },
-    /*  optimization: {
-    minimize: true,
-    mangleWasmImports: true,
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'react',
-          chunks: 'all',
+    optimization: {
+      minimize: true,
+      mangleWasmImports: true,
+      splitChunks: {
+        chunks: "all",
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: "react",
+            chunks: "all"
+          }
         }
       }
     },
-  }, */
     module: {
       rules: [
         {
