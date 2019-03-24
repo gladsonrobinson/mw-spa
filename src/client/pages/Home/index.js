@@ -1,10 +1,6 @@
 import React from "react";
 import MapContainer from "../../containers/Map";
-import {
-  Wrapper,
-  Map,
-  MapManager
-} from "../../components";
+import { Wrapper, Map, MapManager } from "../../components";
 
 export default class Home extends React.Component {
   render() {

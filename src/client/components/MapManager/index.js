@@ -3,10 +3,9 @@ import PlaceSearchModalBtn from "../PlaceSearchModalBtn";
 import "./map-manager.css";
 
 export default class MapManager extends React.PureComponent {
-
-  onDelectClick = (id) => {
+  onDelectClick = id => {
     this.props.removeMapMarker(id);
-  }
+  };
   render() {
     return (
       <div className="map-manager">
@@ -32,7 +31,10 @@ export default class MapManager extends React.PureComponent {
                   <div className="map-manager-markers__item__latlng">
                     Longitude: {item.latLng.lng}
                   </div>
-                  <button className="map-manager-markers__item__delete" onClick={this.onDelectClick.bind(null, item._id)} >
+                  <button
+                    className="map-manager-markers__item__delete"
+                    onClick={this.onDelectClick.bind(null, item._id)}
+                  >
                     Delete
                   </button>
                 </div>

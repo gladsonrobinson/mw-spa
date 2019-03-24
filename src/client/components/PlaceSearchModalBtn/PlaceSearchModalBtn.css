@@ -32,10 +32,11 @@
 .add-map__modal__close:hover {
   opacity: 1;
 }
-.add-map__modal__close:before, .add-map__modal__close:after {
+.add-map__modal__close:before,
+.add-map__modal__close:after {
   position: absolute;
   left: 15px;
-  content: ' ';
+  content: " ";
   height: 33px;
   width: 2px;
   background-color: #333;

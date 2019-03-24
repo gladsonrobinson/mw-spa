@@ -26,7 +26,10 @@ const map = (state = initialState, action) => {
     case ADD_MAP_MARKER:
       return { ...state, mapMarkers: [...state.mapMarkers, action.payload] };
     case REMOVE_MAP_MARKER:
-      return {...state, mapMarkers: state.mapMarkers.filter(item => item._id !== action.payload)}
+      return {
+        ...state,
+        mapMarkers: state.mapMarkers.filter(item => item._id !== action.payload)
+      };
     case SET_FETCH_STATUS:
       return { ...state, fetchStatus: true, errorMessage: "" };
     case SHOW_MODAL:

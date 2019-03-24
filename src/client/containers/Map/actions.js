@@ -25,9 +25,9 @@ export const onPlaceSelect = selectPlaceData => {
   };
 };
 
-export const removeMapMarker = (id) => {
+export const removeMapMarker = id => {
   return dispatch => {
-    return axios.delete(`api/map/${id }`).then(res => {
+    return axios.delete(`api/map/${id}`).then(res => {
       dispatch(removeMarkerAction(id));
     });
   };
@@ -47,12 +47,12 @@ export const loadInitialData = data => {
   };
 };
 
-export const removeMarkerAction = (id) => {
+export const removeMarkerAction = id => {
   return {
     type: REMOVE_MAP_MARKER,
     payload: id
-  }
-}
+  };
+};
 
 export const showPlaceSearchModal = () => {
   return {

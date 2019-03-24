@@ -1,7 +1,9 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
-const environment = process.env.NODE_ENV || 'development';
-environment === 'development' ? dotenv.config({ path: '.env.dev' }) : dotenv.config();
+const environment = process.env.NODE_ENV || "development";
+environment === "development"
+  ? dotenv.config({ path: ".env.dev" })
+  : dotenv.config();
 
 /* All the config and specific to developemnt and prodection goes here. */
 
@@ -11,15 +13,15 @@ var config = {
     MONGO: {
       uri: process.env.MONGO_URI,
       options: { useNewUrlParser: true, useCreateIndex: true }
-    },
+    }
   },
   production: {
     PORT: process.env.PORT,
     MONGO: {
       uri: process.env.MONGO_URI,
-      options: { useNewUrlParser: true, useCreateIndex: true  }
-    },
+      options: { useNewUrlParser: true, useCreateIndex: true }
+    }
   }
-}
+};
 
 module.exports = config[environment];
