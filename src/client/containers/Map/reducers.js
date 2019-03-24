@@ -11,7 +11,7 @@ let initialState = {
   mapMarkers: [],
   errorMessage: "",
   fetchStatus: false,
-  showModal: false
+  showModal: false,
 };
 
 const map = (state = initialState, action) => {

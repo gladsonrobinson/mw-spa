@@ -1,5 +1,6 @@
 import React from "react";
-import PlaceSearchModalBtn from "../PlaceSearchModalBtn";
+import { PlaceSearchModalBtn, ErrorBoundary } from "../../components";
+
 import "./map-manager.css";
 
 export default class MapManager extends React.PureComponent {
@@ -10,12 +11,14 @@ export default class MapManager extends React.PureComponent {
     return (
       <div className="map-manager">
         <div>
-          <PlaceSearchModalBtn
-            showModal={this.props.showModal}
-            handleOpenModal={this.props.showPlaceSearchModal}
-            handleCloseModal={this.props.hidePlaceSearchModal}
-            onPlaceSelect={this.props.onPlaceSelect}
-          />
+          <ErrorBoundary>
+            <PlaceSearchModalBtn
+              showModal={this.props.showModal}
+              handleOpenModal={this.props.showPlaceSearchModal}
+              handleCloseModal={this.props.hidePlaceSearchModal}
+              onPlaceSelect={this.props.onPlaceSelect}
+            />
+          </ErrorBoundary>
         </div>
         <div className="map-manager-markers">
           {this.props.mapMarkers.length > 0 &&

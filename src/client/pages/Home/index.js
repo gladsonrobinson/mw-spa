@@ -1,8 +1,9 @@
 import React from "react";
 import MapContainer from "../../containers/Map";
-import { Wrapper, Map, MapManager } from "../../components";
+import { Wrapper, Map, MapManager, ErrorBoundary } from "../../components";
 
 export default class Home extends React.Component {
+
   render() {
     return (
       <MapContainer>
@@ -17,7 +18,10 @@ export default class Home extends React.Component {
         }) => {
           return (
             <Wrapper className="mw-map" onMountFunction={getMapMarkers}>
-              <Map mapMarkers={mapMarkers} />
+              <ErrorBoundary>
+                <Map mapMarkers={mapMarkers} />
+              </ErrorBoundary>
+              
               <MapManager
                 mapMarkers={mapMarkers}
                 showPlaceSearchModal={showPlaceSearchModal}

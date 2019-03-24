@@ -46,3 +46,7 @@
   flex-flow: wrap;
   margin-top: 10px;
 }
+
+.component--error {
+  color: #D8000C;
+}
