@@ -1,69 +1,132 @@
-import reducer from "../../../../src/client/containers/Movies/reducers";
+import reducer from "../../../../src/client/containers/Map/reducers";
 
-describe("Movie Reducer", () => {
+describe("Map Reducer", () => {
   it("should return the initial state", () => {
     const initialState = {
-      movieList: [],
+      mapMarkers: [],
       errorMessage: "",
-      fetchStatus: false
+      fetchStatus: false,
+      showModal: false,
     };
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it("should handle SET_FETCH_STATUS", () => {
+  it("should handle LOAD_MAP_MARKERS", () => {
     const state = {
-      movieList: [],
-      errorMessage: "",
-      fetchStatus: true
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }],
+      fetchStatus: false,
+      showModal: false,
     };
     const action = {
-      type: "SET_FETCH_STATUS"
+      type: "LOAD_MAP_MARKERS",
+      payload: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }]
     };
     expect(reducer(undefined, action)).toEqual(state);
   });
 
-  it("should handle SEARCH_SUCCESS", () => {
+  it("should handle ADD_MAP_MARKER", () => {
+    const curentState = {
+      mapMarkers: [],
+      fetchStatus: false,
+      showModal: false,
+    };
     const state = {
-      movieList: [{ Title: "CSI: Crime Scene Investigation" }],
-      errorMessage: "",
-      fetchStatus: false
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany",
+      }],
+      fetchStatus: false,
+      showModal: false,
     };
     const action = {
-      type: "SEARCH_SUCCESS",
+      type: "ADD_MAP_MARKER",
       payload: {
-        data: [{ Title: "CSI: Crime Scene Investigation" }],
-        message: ""
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany",
       }
     };
-    expect(reducer(undefined, action)).toEqual(state);
+    expect(reducer(curentState, action)).toEqual(state);
   });
 
-  it("should handle SEARCH_REJECTED", () => {
-    const state = {
-      movieList: [],
-      errorMessage: {
-        err: "Search failed"
-      },
-      fetchStatus: false
+  it("should handle REMOVE_MAP_MARKER", () => {
+    const currentState = {
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }],
+      fetchStatus: false,
+      showModal: false,
+    }
+    const stateAfterAction = {
+      mapMarkers: [],
+      fetchStatus: false,
+      showModal: false,
     };
     const action = {
-      type: "SEARCH_REJECTED",
-      payload: {
-        err: "Search failed"
-      }
+      type: "REMOVE_MAP_MARKER",
+      payload: "5c978106be3a090045a174e6"
     };
-    expect(reducer(undefined, action)).toEqual(state);
+    expect(reducer(currentState, action)).toEqual(stateAfterAction);
   });
 
-  it("should handle CLEAR_RESULTS", () => {
-    const state = {
-      movieList: [],
-      errorMessage: "",
-      fetchStatus: false
+  it("should handle SHOW_MODAL", () => {
+    const currentState = {
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }],
+      fetchStatus: false,
+      showModal: false,
+    };
+    const stateAfterAction = {
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }],
+      fetchStatus: false,
+      showModal: true,
     };
     const action = {
-      type: "CLEAR_RESULTS"
+      type: "SHOW_MODAL"
     };
-    expect(reducer(undefined, action)).toEqual(state);
+    expect(reducer(currentState, action)).toEqual(stateAfterAction);
+  });
+
+  it("should handle HIDE_MODAL", () => {
+    const currentState = {
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }],
+      fetchStatus: false,
+      showModal: true,
+    };
+    const stateAfterAction = {
+      mapMarkers: [{
+        "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+        "_id": "5c978106be3a090045a174e6",
+        "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+      }],
+      fetchStatus: false,
+      showModal: false,
+    };
+    const action = {
+      type: "HIDE_MODAL"
+    };
+    expect(reducer(currentState, action)).toEqual(stateAfterAction);
   });
 });

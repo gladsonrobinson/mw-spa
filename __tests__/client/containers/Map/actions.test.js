@@ -7,109 +7,78 @@ import * as actions from "../../../../src/client/containers/Map/actions";
 const axiosMock = new MockAdapter(axios);
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const searchResponse = [
-  {
-    Title: "CSI: Crime Scene Investigation",
-    Year: "2000–2015",
-    imdbID: "tt0247082",
-    Type: "series",
-    Poster:
-      "https://images-na.ssl-images-amazon.com/images/M/MV5BMTkyODgwMDMzNV5BMl5BanBnXkFtZTgwMTExOTMyMjE@._V1_SX300.jpg"
-  },
-  {
-    Title: "American Crime Story",
-    Year: "2016–",
-    imdbID: "tt2788432",
-    Type: "series",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BNzc2MzJmM2ItMjgzYy00MjgxLTljYjctZjJhYzM1ODFhMzU0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
-  }
-];
+const mapGetApiRes = [{
+  "latLng": { "lat": 50.1139928, "lng": 8.67412539999998 },
+  "_id": "5c978106be3a090045a174e6",
+  "address": "Goethestraße, Frankfurt, Germany", "__v": 0
+},
+{
+  "latLng": { "lat": 52.52590199999999, "lng": 13.369220199999972 },
+  "_id": "5c98833b8871170053f93970",
+  "address": "Europaplatz, Berlin, Germany", "__v": 0
+}];
 
-describe("getMoviesOnSearch", () => {
-  it("should make an http request for movies if the search key length is greater than equals 3", () => {
-    const uri = "/api/movies/search?searchkey=crime";
-    axiosMock.onGet(uri).reply(200, searchResponse);
-    let event = {
-      target: {
-        value: "crime"
+const mapPostApiRes = {
+  "latLng": { "lat": 52.52590199999999, "lng": 13.369220199999972 },
+  "_id": "5c98833b8871170053f93970",
+  "address": "Europaplatz, Berlin, Germany", "__v": 0
+};
+
+const mapDeleteApiRes = { "n": 1, "ok": 1, "deletedCount": 1 }
+
+describe("Map Marker Action", () => {
+
+  it("should make an http request for getting availabe markers and dispatch LOAD_MAP_MARKERS action", () => {
+    const uri = "/api/map";
+    axiosMock.onGet(uri).reply(200, mapGetApiRes);
+
+    const loadInitialData = [
+      {
+        type: "LOAD_MAP_MARKERS",
+        payload: mapGetApiRes
       }
-    };
-
-    const successAction = [
-      { type: "SET_FETCH_STATUS" },
-      { type: "SEARCH_SUCCESS", payload: { data: searchResponse, message: "" } }
     ];
 
-    const store = mockStore({ movies: {} });
-    store.dispatch(actions.getMoviesOnSearch(event)).then(() => {
-      expect(store.getActions()).toMatchObject(successAction);
+    const store = mockStore({ mapMarker: {} });
+    store.dispatch(actions.getMapMarkers()).then(() => {
+      expect(store.getActions()).toMatchObject(loadInitialData);
     });
   });
 
-  it("should not make an http request if the search key length is less then 3", () => {
-    const uri = "/api/movies/search?searchkey=cr";
-    let spy = jest.spyOn(axios, "get");
-    axiosMock.onGet(uri).reply(200, searchResponse);
-    let event = {
-      target: {
-        value: "cr"
+  it("should make an http request on place select from the autocomplete and dispatch ADD_MAP_MARKER action", () => {
+    const uri = "/api/map";
+    axiosMock.onPost(uri, {
+      "latLng": { "lat": 52.52590199999999, "lng": 13.369220199999972 },
+      "address": "Europaplatz, Berlin, Germany", "__v": 0
+    }).reply(200, mapPostApiRes);
+
+    const loadInitialData = [
+      {
+        type: "ADD_MAP_MARKER",
+        payload: mapPostApiRes
       }
-    };
+    ];
 
-    const clearAction = [{ type: "CLEAR_RESULTS" }];
-
-    const store = mockStore({ movies: {} });
-
-    store.dispatch(actions.getMoviesOnSearch(event));
-    expect(store.getActions()).toMatchObject(clearAction);
-    expect(spy).not.toHaveBeenCalled();
+    const store = mockStore({ mapMarker: {} });
+    store.dispatch(actions.onPlaceSelect()).then(() => {
+      expect(store.getActions()).toMatchObject(loadInitialData);
+    });
   });
 
-  it("should set error message on empty result", () => {
-    const uri = "/api/movies/search?searchkey=crime";
-    let spy = jest.spyOn(axios, "get");
-    axiosMock.onGet(uri).reply(200, []);
-    let event = {
-      target: {
-        value: "crime"
+  it("should make an http request for remove Map Marker and dispatch REMOVE_MAP_MARKER action", () => {
+    const uri = "api/map/1234";
+    axiosMock.onDelete(uri).reply(200, mapDeleteApiRes);
+
+    const removeAction = [
+      {
+        type: "REMOVE_MAP_MARKER",
+        payload: 1234
       }
-    };
+    ];
 
-    const store = mockStore({ movies: {} });
-
-    store.dispatch(actions.getMoviesOnSearch(event)).then(() => {
-      const expectedActions = store.getActions();
-      expect(expectedActions).toContainEqual({ type: "SET_FETCH_STATUS" });
-      expect(expectedActions).toContainEqual({
-        type: "SEARCH_SUCCESS",
-        payload: {
-          data: [],
-          message: "no_records_found"
-        }
-      });
+    const store = mockStore({ mapMarker: {} });
+    store.dispatch(actions.removeMapMarker(1234)).then(() => {
+      expect(store.getActions()).toMatchObject(removeAction);
     });
-
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it("should set error message on search api error", () => {
-    const uri = "/api/movies/search?searchkey=crime";
-    let spy = jest.spyOn(axios, "get");
-    axiosMock.onGet(uri).reply(500);
-    let event = {
-      target: {
-        value: "crime"
-      }
-    };
-
-    const store = mockStore({ movies: {} });
-
-    store.dispatch(actions.getMoviesOnSearch(event)).then(() => {
-      const expectedActions = store.getActions();
-      expect(expectedActions).toContainEqual({ type: "SET_FETCH_STATUS" });
-      expect(expectedActions[1].type).toEqual("SEARCH_REJECTED");
-    });
-    expect(spy).toHaveBeenCalled();
   });
 });
